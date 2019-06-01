@@ -1,3 +1,21 @@
+const readUploadedFileAsText = (inputFile) => {
+	const temporaryFileReader = new FileReader();
+
+	return new Promise((resolve, reject) => {
+		temporaryFileReader.onerror = () => {
+			temporaryFileReader.abort();
+			reject(new DOMException("Problem parsing input file."));
+		};
+
+		temporaryFileReader.onload = () => {
+			var parser = new DOMParser();
+			var xml = parser.parseFromString(temporaryFileReader.result,"text/xml");
+			resolve(xmlToJson(xml));
+		};
+		temporaryFileReader.readAsText(inputFile);
+	});
+};
+
 function xmlToJson(xml) {
 	var obj = {};
 	if (xml.nodeType == 1) {
