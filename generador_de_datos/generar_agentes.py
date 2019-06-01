@@ -26,4 +26,7 @@ def generate_agents(count):
             agent_service_id.text = service_id
     return ET.tostring(data)
 
-print(generate_agents(1000))
+agents_xml = generate_agents(2000)
+f = open('agents.xml', 'wb')
+f.write(agents_xml)
+f.close()
