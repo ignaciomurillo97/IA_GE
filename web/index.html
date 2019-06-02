@@ -127,40 +127,51 @@
 
     <section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="load">
       <div class="w-100">
-        <h2 class="mb-5">Cargar</h2>
         <div class="container">
           <div class="row">
             <div class="col" style="padding-left: 0">
               <h3 class="mb-0">Agentes</h3>
               <div class="input-group">
 
-                  <div class="custom-file">
+                  <div class="custom-file mb-2">
                     <input type="file" class="input-default-js" id="uploadAgents">
                     <label class="custom-file-label" for="uploadAgents">Seleccionar agentes</label>
                   </div>
                 </div>
-                  <div class="card">
-                    <div class="card-body">
-                    </div>
+                  <div class="card scroll">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Servicios</th>
+                              </tr>
+                            </thead>
+                            <tbody id="AgentsTarget"></tbody>
+                          </table>
                   </div>
                   
                 
             </div>
             <div class="col">
               <h3 class="mb-0">Servicios</h3>
-              <div class="input-group">
+              <div class="input-group mb-2">
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="uploadServices">
                     <label class="custom-file-label" for="uploadServices">Seleccionar Servicios</label>
                   </div>
                 </div>
-                <div class="card">
-                  <div class="card-body">
-                     
-                    <!-- <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                  </div>
+                <div class="card scroll">
+                      <table class="table table-striped table-hover">
+                          <thead>
+                            <tr>
+                              <th scope="col">Id</th>
+                              <th scope="col">Nombre</th>
+                              <th scope="col">Cliente</th>
+                            </tr>
+                          </thead>
+                          <tbody id="ServicesTarget"></tbody>
+                        </table>
                 </div>
                 
               
