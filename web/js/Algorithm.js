@@ -46,3 +46,17 @@ window.onload = function() {
     });
 
 };
+
+function generateInitialPopulation(agents, services, populationSize) {
+    var population = Array();
+    for (let i = 0; i < populationSize; i++) {
+        let gene = {};
+        gene.dna = Array();
+        gene.fitness = 0;
+        for (let j = 0; j < services.length; j++){
+            gene.dna.push(Math.floor(Math.random() * agents.length));
+        }
+        population.push(gene);
+    }
+    return population;
+}
