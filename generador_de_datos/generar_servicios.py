@@ -1,6 +1,7 @@
 #! /bin/python3
 import xml.etree.ElementTree as ET
 import random
+import sys
 from faker import Faker
 
 fake = Faker()
@@ -23,7 +24,8 @@ def generate_services(count):
 
     return ET.tostring(data)
 
-services_xml = generate_services(2000)
-f = open('services.xml', 'wb')
+params = sys.argv[1:]
+services_xml = generate_services(int(params[0]))
+f = open(params[1], 'wb')
 f.write(services_xml)
 f.close()

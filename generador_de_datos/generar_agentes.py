@@ -1,6 +1,7 @@
 #! /bin/python3
 import xml.etree.ElementTree as ET
 import random
+import sys
 from faker import Faker
 
 fake = Faker()
@@ -29,7 +30,8 @@ def generate_agents(count):
             agent_service_id.text = service_id
     return ET.tostring(data)
 
-agents_xml = generate_agents(500)
-f = open('agents.xml', 'wb')
+params = sys.argv[1:]
+agents_xml = generate_agents(int(params[0]))
+f = open(params[1], 'wb')
 f.write(agents_xml)
 f.close()
