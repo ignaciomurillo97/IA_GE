@@ -1,4 +1,5 @@
-let populationSize = 500;
+let population = Array();
+let populationSize = 100;
 let MaxDuration = 40;
 
 let tableData = {
@@ -64,14 +65,16 @@ window.onload = function() {
 
 };
 
-function ExecuteAlgoritm(){
+async function ExecuteAlgoritm(){
     if (typeof  agents === 'undefined' || typeof services === 'undefined') {
         alert('Debe cargar los datos para continuar')
         return
     }
 
     population = generateInitialPopulation();
-    ExecuteGeneticAlgorithm();
+    console.log('antes');
+    ExecuteGeneticAlgorithm()
+    console.log('despues');
 }
 
 function BestSolution(){
@@ -85,18 +88,31 @@ function BestSolution(){
     return population[Fittest];
 }
 
-async function ExecuteGeneticAlgorithm(){
-    return new Promise((resolve) => {
-        for (let i = 0; i < MaxGenerations; i++) {
-            population = NextGeneration();
-            fittest = BestSolution();
-            console.log(i + 1, fittest);
-            if (fittest.fitness <= FitnessGoal){
-                break
-            }
+function GeneticAlgorithmIterator(){
+    this.startCalculation = () => {
+        setTimeout(
+            this.IterateGeneticAlgorithm.bind(this),
+            0
+        );
+    }
+    
+    this.IterateGeneticAlgorithm = () => {
+        population = NextGeneration();
+        fittest = BestSolution();
+        console.log(fittest);
+        if (fittest.fitness <= FitnessGoal){
+            return
         }
-        resolve("Solución buena")
-    });
+        setTimeout(
+            this.IterateGeneticAlgorithm.bind(this),
+            0
+        );
+    }
+}
+
+function ExecuteGeneticAlgorithm(){
+    let GEIterator = new GeneticAlgorithmIterator();
+    GEIterator.startCalculation();
 }
 
 function NextGeneration(){
@@ -184,7 +200,6 @@ function calculateFitness(gene){
 }
 
 function generateInitialPopulation() {
-    var population = Array();
     for (let i = 0; i < populationSize; i++) {
         let gene = {};
         gene.dna = Array();
