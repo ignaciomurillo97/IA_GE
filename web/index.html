@@ -185,7 +185,29 @@
     <hr class="m-0">
 
     <section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="experience">
-      <div id="canvas" class="w-100"></div>
+      <div id="canvas" class="w-100">
+        <table class="table table-striped table-hover mb-2">
+            <tr>
+              <th scope="col">Generación</th>
+              <td id="generationNumber"></td>
+            </tr>
+            <tr>
+              <th scope="col">Desviación Estándar de la Comisión</th>
+              <td id="standardDeviationNumber"></td>
+            </tr>
+        </table>
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Agente</th>
+              <th scope="col">Horas totales</th>
+              <th scope="col">Comisión total</th>
+              <th scope="col">Órdenes de servicio</th>
+            </tr>
+          </thead>
+          <tbody id="fittestResult"></tbody>
+        </table>
+      </div>
 
     </section>
 

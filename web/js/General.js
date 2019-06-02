@@ -1,3 +1,37 @@
+function showResult(generation , gene){
+    console.log(generation, gene);
+    jQuery("#generationNumber").html(generation);
+    jQuery("#standardDeviationNumber").html(Math.floor(Math.sqrt(gene.standardDeviation)));
+    var fittestResult = "";
+    jQuery.each(gene.AgentsData, function (i, data){
+        fittestResult += "<tr>" +
+        "<td> " + agents.agent[i].name + " </td>" + 
+        "<td>" + data.duration + " </td>" +
+        "<td>" + data.commission + " </td>" +
+        "<td> " + TableServices(i, gene) + "</td>" +
+        "</tr>";
+    })
+    
+    jQuery("#fittestResult").html(fittestResult);
+}
+
+function TableServices(agent, gene){
+    var retTable = '<table class="table table-striped table-hover">';
+    for (var i = 0; i < gene.dna.length; i++) {
+        if (gene.dna[i] == agent) {
+            var service = services.service[i].code;
+            retTable += "<tr><th scope='col'>Id</th><td>" + services.service[i].id + "</td>"
+            retTable += "<th scope='col'>Código</th><td>" + services.service[i].code + "</td>"
+            retTable += "<th scope='col'>Comisión</th><td>" + tableData[service].commission + "</td>"
+            retTable += "<th scope='col'>Horas</th><td>" + tableData[service].duration + "</td>"
+            retTable += "<th scope='col'>Cliente</th><td>" + services.service[i].client + "</td></tr>"
+        }
+    }
+
+    retTable += "</table>"
+    return retTable;
+}
+
 const readUploadedFileAsText = (inputFile) => {
 	const temporaryFileReader = new FileReader();
 

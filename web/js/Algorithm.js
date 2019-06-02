@@ -1,5 +1,5 @@
 let population = Array();
-let populationSize = 100;
+let populationSize = 10;
 let MaxDuration = 40;
 
 let tableData = {
@@ -15,8 +15,8 @@ let agents;
 let services;
 
 let MutationProbabilty = 0.05;
-let ExtraDurationPenalty = 0;
-let ExtraServicesPenalty = 0;
+let ExtraDurationPenalty = 20;
+let ExtraServicesPenalty = 1000;
 let MaxGenerations = 2000;
 let FitnessGoal = 0;
 
@@ -89,7 +89,9 @@ function BestSolution(){
 }
 
 function GeneticAlgorithmIterator(){
+    var generation;
     this.startCalculation = () => {
+        generation = 0;
         setTimeout(
             this.IterateGeneticAlgorithm.bind(this),
             0
@@ -97,9 +99,10 @@ function GeneticAlgorithmIterator(){
     }
     
     this.IterateGeneticAlgorithm = () => {
+        generation++;
         population = NextGeneration();
         fittest = BestSolution();
-        console.log(fittest);
+        showResult(generation, fittest);
         if (fittest.fitness <= FitnessGoal){
             return
         }
@@ -175,24 +178,28 @@ function calculateFitness(gene){
             FitnessData[gene.dna[i]] = {commission: 0, duration: 0};
         }
         if (agent.services.id.indexOf(service) >= 0){
-            FitnessData[gene.dna[i]].commission += tableData[service].commission;
-            average += tableData[service].commission;
+            //FitnessData[gene.dna[i]].commission += tableData[service].commission;
+            //average += tableData[service].commission;
         }else{
             extraServices++;
         }
-        
+
+        FitnessData[gene.dna[i]].commission += tableData[service].commission;
+        average += tableData[service].commission;
         FitnessData[gene.dna[i]].duration += tableData[service].duration;
     }
     average /= agents.agent.length;
 
     jQuery.each(FitnessData, function(i, data){
-        fitness += Math.pow(data.commission - average, 1)
+        fitness += Math.pow(data.commission - average, 2)
         if (data.duration > MaxDuration){
             extraDuration += (data.duration - MaxDuration);
         }
     });
     
     fitness /= agents.agent.length;
+    gene.standardDeviation = fitness;
+    gene.AgentsData = FitnessData;
     //fitness += extraDuration * ExtraDurationPenalty;
     //fitness += extraServices * ExtraServicesPenalty;
 
