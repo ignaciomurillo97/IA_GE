@@ -23,7 +23,7 @@ def generate_services(count):
 
     return ET.tostring(data)
 
-services_xml = generate_services(20)
+services_xml = generate_services(2000)
 f = open('services.xml', 'wb')
 f.write(services_xml)
 f.close()
