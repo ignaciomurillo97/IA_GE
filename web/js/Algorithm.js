@@ -15,8 +15,8 @@ let agents;
 let services;
 
 let MutationProbabilty = 0.05;
-let ExtraDurationPenalty = 20;
-let ExtraServicesPenalty = 1000;
+let ExtraDurationPenalty = 50;
+let ExtraServicesPenalty = 200000;
 let MaxGenerations = 2000;
 let FitnessGoal = 0;
 
@@ -103,7 +103,7 @@ function GeneticAlgorithmIterator(){
         population = NextGeneration();
         fittest = BestSolution();
         showResult(generation, fittest);
-        if (fittest.fitness <= FitnessGoal){
+        if (fittest.fitness <= FitnessGoal || generation > MaxGenerations){
             return
         }
         setTimeout(
@@ -173,20 +173,19 @@ function calculateFitness(gene){
     for (let i = 0; i < gene.dna.length; i++) {
         var service = services.service[i].code;
         var agent = agents.agent[gene.dna[i]];
-
-        if (!(gene.dna[i] in FitnessData)){
-            FitnessData[gene.dna[i]] = {commission: 0, duration: 0};
-        }
         if (agent.services.id.indexOf(service) >= 0){
-            //FitnessData[gene.dna[i]].commission += tableData[service].commission;
-            //average += tableData[service].commission;
+            
+
+            if (!(gene.dna[i] in FitnessData)){
+                FitnessData[gene.dna[i]] = {commission: 0, duration: 0};
+            }
+
+            FitnessData[gene.dna[i]].commission += tableData[service].commission;
+            average += tableData[service].commission;
+            FitnessData[gene.dna[i]].duration += tableData[service].duration;
         }else{
             extraServices++;
         }
-
-        FitnessData[gene.dna[i]].commission += tableData[service].commission;
-        average += tableData[service].commission;
-        FitnessData[gene.dna[i]].duration += tableData[service].duration;
     }
     average /= agents.agent.length;
 
@@ -200,8 +199,10 @@ function calculateFitness(gene){
     fitness /= agents.agent.length;
     gene.standardDeviation = fitness;
     gene.AgentsData = FitnessData;
-    //fitness += extraDuration * ExtraDurationPenalty;
-    //fitness += extraServices * ExtraServicesPenalty;
+    gene.extraDuration = extraDuration;
+    gene.extraServices = extraServices;
+    fitness += extraDuration * ExtraDurationPenalty;
+    fitness += extraServices * ExtraServicesPenalty;
 
     return fitness;
 }

@@ -2,6 +2,8 @@ function showResult(generation , gene){
     console.log(generation, gene);
     jQuery("#generationNumber").html(generation);
     jQuery("#standardDeviationNumber").html(Math.floor(Math.sqrt(gene.standardDeviation)));
+    jQuery("#estraServicesNumber").html(gene.extraServices);
+    jQuery("#extraDurationNumber").html(gene.extraDuration);
     var fittestResult = "";
     jQuery.each(gene.AgentsData, function (i, data){
         fittestResult += "<tr>" +
@@ -20,11 +22,13 @@ function TableServices(agent, gene){
     for (var i = 0; i < gene.dna.length; i++) {
         if (gene.dna[i] == agent) {
             var service = services.service[i].code;
-            retTable += "<tr><th scope='col'>Id</th><td>" + services.service[i].id + "</td>"
-            retTable += "<th scope='col'>Código</th><td>" + services.service[i].code + "</td>"
-            retTable += "<th scope='col'>Comisión</th><td>" + tableData[service].commission + "</td>"
-            retTable += "<th scope='col'>Horas</th><td>" + tableData[service].duration + "</td>"
-            retTable += "<th scope='col'>Cliente</th><td>" + services.service[i].client + "</td></tr>"
+            if (agents.agent[agent].services.id.indexOf(service) >= 0){
+                retTable += "<tr><th scope='col'>Id</th><td>" + services.service[i].id + "</td>"
+                retTable += "<th scope='col'>Código</th><td>" + services.service[i].code + "</td>"
+                retTable += "<th scope='col'>Comisión</th><td>" + tableData[service].commission + "</td>"
+                retTable += "<th scope='col'>Horas</th><td>" + tableData[service].duration + "</td>"
+                retTable += "<th scope='col'>Cliente</th><td>" + services.service[i].client + "</td></tr>"
+            }
         }
     }
 
