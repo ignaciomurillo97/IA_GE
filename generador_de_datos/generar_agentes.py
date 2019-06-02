@@ -7,7 +7,10 @@ fake = Faker()
 serviceCodeList= ['ICE', 'ICG', 'ILA', 'RCE', 'RCG', 'RLA']
 
 def generate_random_services():
-    return [x for x in serviceCodeList if bool(random.getrandbits(1))]
+    services = [x for x in serviceCodeList if bool(random.getrandbits(1))]
+    if len(services) == 0:
+        return [serviceCodeList[random.randrange(len(serviceCodeList))]]
+    return services
 
 def generate_agents(count):
     data = ET.Element('agents')
