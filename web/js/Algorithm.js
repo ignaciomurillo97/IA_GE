@@ -1,5 +1,6 @@
 let populationSize = 500;
 let MaxDuration = 40;
+
 let tableData = {
     'ICE': {service: 'Instalación de cocina eléctrica', duration: 2, commission: 250},
     'ICG': {service: 'Instalación de cocina de gas', duration: 4, commission: 400},
@@ -89,7 +90,7 @@ async function ExecuteGeneticAlgorithm(){
         for (let i = 0; i < MaxGenerations; i++) {
             population = NextGeneration();
             fittest = BestSolution();
-            console.log(i+1, fittest);
+            console.log(i + 1, fittest);
             if (fittest.fitness <= FitnessGoal){
                 break
             }
@@ -176,8 +177,8 @@ function calculateFitness(gene){
     });
     
     fitness /= agents.agent.length;
-    fitness += extraDuration * ExtraDurationPenalty;
-    fitness += extraServices * ExtraServicesPenalty;
+    //fitness += extraDuration * ExtraDurationPenalty;
+    //fitness += extraServices * ExtraServicesPenalty;
 
     return fitness;
 }
