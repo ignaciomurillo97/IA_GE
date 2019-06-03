@@ -15,7 +15,7 @@ let agents;
 let services;
 
 let MutationProbabilty = 0.05;
-let ExtraDurationPenalty = 50;
+let ExtraDurationPenalty = 20000;
 let ExtraServicesPenalty = 200000;
 let MaxGenerations = 2000;
 let FitnessGoal = 0;
