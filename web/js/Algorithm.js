@@ -130,8 +130,9 @@ function ExecuteGeneticAlgorithm(){
 
 function NextGeneration(){
     var newPopulation = Array();
-    var MaxFitness; 
-    newPopulation.push(BestSolution());
+    var PreviousBestSolution = BestSolution(); 
+    var MaxFitness = PreviousBestSolution.fitness;
+    newPopulation.push(PreviousBestSolution);
     for (let i = 1; i < populationSize; i++) {
         var parent1 = SelectParent();
         var parent2 = SelectParent();
@@ -142,7 +143,7 @@ function NextGeneration(){
             }
         }
         newGene.fitness = calculateFitness(newGene);
-        if (i == 0 || MaxFitness > newGene.fitness){
+        if (MaxFitness < newGene.fitness){
             MaxFitness = newGene.fitness;
         }
         newPopulation.push(newGene)
@@ -156,7 +157,7 @@ function SelectParent(){
     while(i < MaxGenerations){
         i++;
         var randomParent = population[Math.floor(Math.random() * populationSize)];
-        var randomNumber = Math.floor(Math.random() * MaxFitnessGeneration);
+        var randomNumber = Math.random() * MaxFitnessGeneration;
         if (randomNumber >= randomNumber.fitness){
             return randomParent;
         }
