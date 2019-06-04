@@ -44,6 +44,15 @@ function showServices(){
     });
 }
 
+function performClick(elemId) {
+    var elem = document.getElementById(elemId);
+    if(elem && document.createEvent) {
+       var evt = document.createEvent("MouseEvents");
+       evt.initMouseEvent("click", true, true, window,0,0,0,0,0,false,false,false,false,0,null);
+       elem.dispatchEvent(evt);
+    }
+ }
+
 window.onload = function() {
     jQuery("#uploadAgents").change(function (e){
         if (e.target.files.length <= 0) return false;
@@ -71,6 +80,7 @@ async function ExecuteAlgoritm(){
         return
     }
 
+    jQuery('#Algorithm').hide();
     population = generateInitialPopulation();
     console.log('antes');
     ExecuteGeneticAlgorithm()
