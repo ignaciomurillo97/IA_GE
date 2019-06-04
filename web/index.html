@@ -229,7 +229,6 @@
   <script src="annyang.min.js"></script>
   <script type="text/javascript">
     jQuery(document).ready(function () {
-      performClick('uploadAgents')
       if (annyang) {  
         var commands = {
 
@@ -238,6 +237,9 @@
           },    
           'Agents' : function() {
             performClick('uploadAgents')
+          },  
+          'Services' : function() {
+            performClick('uploadServices')
           },
           'Run' :function(){
             jQuery('#Algorithm').click();
