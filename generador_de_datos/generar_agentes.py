@@ -8,10 +8,18 @@ fake = Faker()
 serviceCodeList= ['ICE', 'ICG', 'ILA', 'RCE', 'RCG', 'RLA']
 
 def generate_random_services():
-    services = [x for x in serviceCodeList if bool(random.getrandbits(1))]
-    if len(services) == 0:
-        return [serviceCodeList[random.randrange(len(serviceCodeList))]]
-    return services
+	probability = random.randint(0, 10)
+	if probability > 8:
+		services = random.sample(serviceCodeList, 5)
+	if probability > 4 and probability < 9:
+		services = random.sample(serviceCodeList, 4)
+	if probability > 1 and probability < 5:
+		services = random.sample(serviceCodeList, 3)
+	if probability == 1:
+		services = random.sample(serviceCodeList, 2)
+	if probability == 0:
+		services = random.sample(serviceCodeList, 1)
+	return services
 
 def generate_agents(count):
     data = ET.Element('agents')
